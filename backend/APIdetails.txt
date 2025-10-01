@@ -1,0 +1,7 @@
+Face++ (jsmedia023@gmail.com, Adedayojos@1)
+API Secret: xgIYiMjTqaXh98318nAfJ7bIQL5HEAw3
+API Key: cUDesXCj8xtYFo79ylEyEz2OenI1XEyF
+
+https://api-us.faceplusplus.com/facepp/v3/compare
+
+php artisan serve host= 0.0.0

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduTrack - Attendance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/variables.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../../assets/css/pages.css">
+</head>
+<body class="bg-light">
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div class="sidebar bg-primary text-white p-3">
+            <div class="text-center mb-4">
+                <i class="fas fa-graduation-cap fa-2x"></i>
+                <h4 class="mt-2">EduTrack Admin</h4>
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="index.html"><i class="fas fa-home me-2"></i>Dashboard</a>
+                </li>
+                                <li class="nav-item">
+                    <a class="nav-link text-white" href="schedules.html"><i class="fas fa-calendar me-2"></i>Schedules</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white active" href="attendance.html"><i class="fas fa-check-circle me-2"></i>Attendance</a>
+                </li>
+            </ul>
+            <button class="btn btn-outline-light w-100 mt-4 sidebar-toggle d-md-none"><i class="fas fa-bars me-2"></i>Menu</button>
+        </div>
+        <!-- Main Content -->
+        <div class="flex-grow-1">
+            <!-- Header -->
+            <header class="bg-white shadow p-3 d-flex justify-content-between align-items-center">
+                <h3 class="text-primary mb-0">Attendance</h3>
+                <button class="btn btn-primary logout-btn">Logout</button>
+            </header>
+            <!-- Content -->
+            <div class="container-fluid p-3">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Attendance Records</h5>
+                        <div class="d-flex mb-3 gap-2">
+                        <!-- Course filter -->
+                        <select id="filterCourse" class="form-select w-auto">
+                            <option value="">All Courses</option>
+                        </select>
+
+                        <!-- Student filter -->
+                        <select id="filterMatric" class="form-select w-auto">
+                            <option value="">All Students</option>
+                        </select>
+
+                        <!-- Date filter -->
+                        <input type="date" id="filterDate" class="form-control w-auto">
+
+                        <!-- Apply filter -->
+                        <button id="filterBtn" class="btn btn-primary">Filter</button>
+                    </div>
+
+                        
+                    </div>
+                    
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <!-- <th>ID</th> -->
+                                    <th>Matric Number</th>
+                                    <th>Student Name</th>
+                                    <th>Course</th>
+                                    <th>Hall</th>
+                                    <th>Date/Time</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody id="attendance-table">
+                                <tr>
+                                    <td colspan="7" class="text-center">Loading...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap 5.3 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS files -->
+    <script src="../../assets/js/config.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/lecturer.js"></script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduTrack - Manage Schedules</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/variables.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../../assets/css/pages.css">
+</head>
+<body class="bg-light">
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div class="sidebar bg-primary text-white p-3">
+            <div class="text-center mb-4">
+                <i class="fas fa-graduation-cap fa-2x"></i>
+                <h4 class="mt-2">EduTrack Admin</h4>
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="index.html"><i class="fas fa-home me-2"></i>Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="users.html"><i class="fas fa-users me-2"></i>Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="halls.html"><i class="fas fa-building me-2"></i>Halls</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="courses.html"><i class="fas fa-book me-2"></i>Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white active" href="schedules.html"><i class="fas fa-calendar me-2"></i>Schedules</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="attendance.html"><i class="fas fa-check-circle me-2"></i>Attendance</a>
+                </li>
+            </ul>
+            <button class="btn btn-outline-light w-100 mt-4 sidebar-toggle d-md-none"><i class="fas fa-bars me-2"></i>Menu</button>
+        </div>
+        <!-- Main Content -->
+        <div class="flex-grow-1">
+            <!-- Header -->
+            <header class="bg-white shadow p-3 d-flex justify-content-between align-items-center">
+                <h3 class="text-primary mb-0">Manage Schedules</h3>
+                <button class="btn btn-primary logout-btn">Logout</button>
+            </header>
+            <!-- Content -->
+            <div class="container-fluid p-3">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Schedules</h5>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addScheduleModal"><i class="fas fa-plus me-2"></i>Add Schedule</button>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Course</th>
+                                    <th>Lecturer</th>
+                                    <th>Hall</th>
+                                    <th>Day</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="schedules-table">
+                                <tr>
+                                    <td colspan="8" class="text-center">Loading...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add Schedule Modal -->
+    <div class="modal fade" id="addScheduleModal" tabindex="-1" aria-labelledby="addScheduleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addScheduleModalLabel">Add Schedule</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addScheduleForm">
+                        <div class="mb-3">
+                            <label for="addCourseId" class="form-label">Course</label>
+                            <select class="form-select" id="addCourseId" required>
+                                <option value="" disabled selected>Loading courses...</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="addHallId" class="form-label">Hall</label>
+                            <select class="form-select" id="addHallId" required>
+                                <option value="" disabled selected>Loading halls...</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addDayOfWeek" class="form-label">Day of Week</label>
+                            <select class="form-select" id="addDayOfWeek" required>
+                                <option value="" disabled selected>Select day</option>
+                                <option value="Monday">Monday</option>
+                                <option value="Tuesday">Tuesday</option>
+                                <option value="Wednesday">Wednesday</option>
+                                <option value="Thursday">Thursday</option>
+                                <option value="Friday">Friday</option>
+                                <option value="Saturday">Saturday</option>
+                                <option value="Sunday">Sunday</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addStartTime" class="form-label">Start Time</label>
+                            <input type="time" class="form-control" id="addStartTime" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addEndTime" class="form-label">End Time</label>
+                            <input type="time" class="form-control" id="addEndTime" required>
+                        </div>
+                        <div id="addError" class="text-danger"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="addScheduleSubmit">Add Schedule</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Schedule Modal -->
+    <div class="modal fade" id="editScheduleModal" tabindex="-1" aria-labelledby="editScheduleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editScheduleModalLabel">Edit Schedule</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editScheduleForm">
+                        <input type="hidden" id="editScheduleId">
+                        <div id="editError" class="text-danger"></div>
+                        <div class="mb-3">
+                            <label for="editCourseTitle" class="form-label">Course</label>
+                            <input type="text" class="form-control" id="editCourseTitle" readonly>
+                            <input type="hidden" id="editCourseId">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="editHallId" class="form-label">Hall</label>
+                            <select class="form-select" id="editHallId" required>
+                                <option value="" disabled selected>Loading halls...</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDayOfWeek" class="form-label">Day of Week</label>
+                            <select class="form-select" id="editDayOfWeek" required>
+                                <option value="" disabled selected>Select day</option>
+                                <option value="Monday">Monday</option>
+                                <option value="Tuesday">Tuesday</option>
+                                <option value="Wednesday">Wednesday</option>
+                                <option value="Thursday">Thursday</option>
+                                <option value="Friday">Friday</option>
+                                <option value="Saturday">Saturday</option>
+                                <option value="Sunday">Sunday</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editStartTime" class="form-label">Start Time</label>
+                            <input type="time" class="form-control" id="editStartTime" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editEndTime" class="form-label">End Time</label>
+                            <input type="time" class="form-control" id="editEndTime" required>
+                        </div>
+                        
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="editScheduleSubmit">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap 5.3 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS files -->
+    <script src="../../assets/js/config.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/schedules.js"></script>
+</body>
+</html>  

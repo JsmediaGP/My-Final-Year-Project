@@ -1,0 +1,9 @@
+:root {
+    --primary-color: #007BFF; /* Educative blue for buttons, headings */
+    --secondary-color: #28A745; /* Educative green for accents, success buttons */
+    --background-color: #F8F9FA; /* Light gray for page background */
+    --text-color: #212529; /* Dark text for readability */
+    --card-border: #28A745; /* Green border for cards */
+    --font-family: Arial, sans-serif; /* Clean, professional font */
+    --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}

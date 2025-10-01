@@ -1,0 +1,32 @@
+@import url('variables.css');
+
+.card-link {
+    text-decoration: none !important;
+    color: inherit;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-link:hover {
+    text-decoration: none !important;
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.card {
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.8));
+    border: 1px solid rgba(0, 123, 255, 0.2);
+}
+
+.card-title {
+    font-size: 1.2rem;
+}
+
+.card-text {
+    color: var(--primary-color);
+}
+
+.table {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.8));
+    border-radius: 8px;
+}

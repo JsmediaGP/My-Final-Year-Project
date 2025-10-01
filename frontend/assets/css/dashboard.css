@@ -1,0 +1,44 @@
+@import url('variables.css');
+
+.sidebar {
+    width: 250px;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: -250px; /* Hidden by default on mobile */
+    transition: left 0.3s ease;
+    z-index: 1000;
+}
+
+.sidebar.active {
+    left: 0; /* Show when toggled */
+}
+
+.sidebar .nav-link {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+}
+
+.sidebar .nav-link:hover, .sidebar .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-toggle {
+    display: none; /* Hidden on desktop */
+    border-radius: 4px;
+}
+
+@media (min-width: 768px) {
+    .sidebar {
+        left: 0; /* Always visible on desktop */
+    }
+    .flex-grow-1 {
+        margin-left: 250px; /* Offset for sidebar */
+    }
+}
+
+@media (max-width: 767px) {
+    .sidebar-toggle {
+        display: block; /* Show toggle button on mobile */
+    }
+}

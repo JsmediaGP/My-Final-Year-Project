@@ -1,0 +1,119 @@
+@import url('variables.css');
+
+body.login-background::before {
+    content: '';
+    background-image: url('../images/UI.jpg');
+    background-size: cover; /* Fill entire page */
+    background-position: center;
+    background-repeat: no-repeat;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.2; /* Faded effect */
+    z-index: -1; /* Behind content */
+}
+
+.content-container {
+    background-color: rgba(255, 255, 255, 0.15); /* Transparent white */
+    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+    padding: 2rem;
+    max-width: 1200px; /* Limit width for right-side spacing */
+    margin: 1rem auto; /* Center with minimal top/bottom margin */
+    min-height: calc(100vh - 2rem); /* Fit viewport minus margins */
+}
+
+.login-card {
+    border: 2px solid var(--card-border); /* Green border */
+    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+    width: 100%;
+    max-width: 400px; /* Fixed width */
+    background-color: #FFFFFF; /* Solid white for form readability */
+    z-index: 1; /* Above background */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 65%; /* Adjust to align with input */
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.toggle-password:hover {
+    color: var(--primary-color);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+#error {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.project-info {
+    background-color: #FFFFFF; /* Solid white for text readability */
+    border-left: 3px solid var(--secondary-color); /* Green left border */
+    border-radius: 8px;
+    max-width: 500px; /* Limit width for spacing */
+    z-index: 1; /* Above background */
+}
+
+.project-info h1 {
+    font-size: 1.8rem; /* Smaller for fit */
+    font-weight: bold;
+}
+
+.project-info p, .project-info ul {
+    color: var(--text-color);
+    font-size: 0.95rem; /* Smaller for fit */
+}
+
+.project-info ul li {
+    margin-bottom: 0.5rem;
+}
+
+.copyright {
+    font-size: 0.85rem;
+    color: var(--text-color);
+}
+
+@media (max-width: 767px) {
+    .content-container {
+        margin: 0.5rem auto; /* Smaller margin on mobile */
+        min-height: auto; /* Allow natural height */
+        padding: 1rem;
+    }
+    .project-info {
+        border-left: none;
+        border-top: 3px solid var(--secondary-color); /* Green top border on mobile */
+        margin-top: 1rem;
+        max-width: 100%; /* Full width on mobile */
+    }
+    .login-card {
+        margin-bottom: 1rem;
+    }
+    .project-info h1 {
+        font-size: 1.5rem; /* Smaller on mobile */
+    }
+    .project-info p, .project-info ul {
+        font-size: 0.9rem;
+    }
+}
