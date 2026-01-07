@@ -5,3 +5,4 @@ API Key: cUDesXCj8xtYFo79ylEyEz2OenI1XEyF
 https://api-us.faceplusplus.com/facepp/v3/compare
 
 php artisan serve host= 0.0.0
+php artisan serve --host=0.0.0.0 --port=8000

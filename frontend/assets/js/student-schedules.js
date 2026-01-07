@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             <td>${schedule.course_title || 'N/A'}</td>
                             <td>${schedule.course_code || 'N/A'}</td>
                             <td>${schedule.hall_name || 'N/A'}</td>
-                            <td>${schedule.day_of_week || 'N/A'}</td>
+                            <td>${schedule.day || 'N/A'}</td>
                             <td>${schedule.start_time ? schedule.start_time.slice(0, 5) : 'N/A'}</td>
                             <td>${schedule.end_time ? schedule.end_time.slice(0, 5) : 'N/A'}</td>
                             <td>${schedule.status || 'N/A'}</td>
