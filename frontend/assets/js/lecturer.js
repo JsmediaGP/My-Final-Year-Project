@@ -39,6 +39,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const filterDate = document.getElementById("filterDate");
     const filterBtn = document.getElementById("filterBtn");
     
+    const exportCsvBtn = document.getElementById("exportCsv");
+    const exportPdfBtn = document.getElementById("exportPdf");
 
     // -------------------- LOADING STATES --------------------
     if (coursesTable) coursesTable.innerHTML = '<tr><td colspan="5" class="text-center">Loading...</td></tr>';
@@ -138,7 +140,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // -------------------- ATTENDANCE --------------------
-
+    function getAttendanceExportData() {
+        return filteredAttendance.map(r => ({
+            matric: r.student?.matric_number || 'N/A',
+            name: r.student 
+                ? `${r.student.first_name} ${r.student.last_name}` 
+                : 'N/A',
+            course: r.class_schedule?.course?.course_title || 'N/A',
+            hall: r.class_schedule?.hall?.hall_name || 'N/A',
+            date: r.date || 'N/A'
+        }));
+    }
     
     let currentPage = 1;
     const recordsPerPage = 25;
@@ -225,6 +237,66 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     }
+
+    if (exportCsvBtn) {
+        exportCsvBtn.addEventListener("click", () => {
+            const data = getAttendanceExportData();
+
+            if (!data.length) {
+                alert("No attendance data to export");
+                return;
+            }
+
+            let csv = "Matric Number,Student Name,Course,Hall,Date\n";
+
+            data.forEach(r => {
+                csv += `"${r.matric}","${r.name}","${r.course}","${r.hall}","${r.date}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+            const url = URL.createObjectURL(blob);
+
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "attendance_records.csv";
+            link.click();
+        });
+    }
+
+    if (exportPdfBtn) {
+        exportPdfBtn.addEventListener("click", () => {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            const data = getAttendanceExportData();
+
+            if (!data.length) {
+                alert("No attendance data to export");
+                return;
+            }
+
+            const rows = data.map(r => [
+                r.matric,
+                r.name,
+                r.course,
+                r.hall,
+                r.date
+            ]);
+
+            doc.text("EduTrack Attendance Records", 14, 15);
+
+            doc.autoTable({
+                head: [["Matric Number", "Student Name", "Course", "Hall", "Date"]],
+                body: rows,
+                startY: 20
+            });
+
+            doc.save("attendance_records.pdf");
+        });
+    }
+
+ 
+
 
     
   
@@ -374,6 +446,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+    
 
 
 
