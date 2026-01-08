@@ -187,6 +187,8 @@ document.addEventListener('DOMContentLoaded', function () {
             if (data.message === 'Attendance fetched' && data.data) {
                 filteredAttendance = data.data; // store full data initially
                 renderAttendance(filteredAttendance);
+                renderAttendanceSummary(filteredAttendance);
+
             } else if (attendanceTable) attendanceTable.innerHTML = '<tr><td colspan="7" class="text-center">Failed to load</td></tr>';
         })
         .catch(err => { if (attendanceTable) attendanceTable.innerHTML = '<tr><td colspan="7" class="text-center">Failed to load</td></tr>'; });
@@ -213,6 +215,8 @@ document.addEventListener('DOMContentLoaded', function () {
         renderPagination(totalPages);
     }
 
+
+
     function renderPagination(totalPages) {
         const paginationContainerId = 'pagination-container';
         let paginationContainer = document.getElementById(paginationContainerId);
@@ -238,6 +242,62 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    function renderAttendanceSummary(data) {
+        const table = document.getElementById("attendance-summary-table");
+        if (!table) return;
+
+        if (!data.length) {
+            table.innerHTML =
+                `<tr><td colspan="5" class="text-center">No data</td></tr>`;
+            return;
+        }
+
+        // total unique lecture days (after filters)
+        const totalClasses = new Set(data.map(r => r.date)).size;
+
+        // group attendance by student
+        const summary = {};
+
+        data.forEach(r => {
+            if (!r.student) return;
+
+            const id = r.student.id;
+
+            if (!summary[id]) {
+                summary[id] = {
+                    matric: r.student.matric_number,
+                    name: `${r.student.first_name} ${r.student.last_name}`,
+                    count: 0
+                };
+            }
+
+            summary[id].count += 1;
+        });
+
+        table.innerHTML = Object.values(summary).map(s => {
+            const percent = totalClasses
+                ? ((s.count / totalClasses) * 100).toFixed(2)
+                : 0;
+
+            const eligible = percent >= 75;
+
+            return `
+                <tr>
+                    <td>${s.matric}</td>
+                    <td>${s.name}</td>
+                    <td>${s.count}</td>
+                    <td>${percent}%</td>
+                    <td>
+                        <span class="badge ${eligible ? 'bg-success' : 'bg-danger'}">
+                            ${eligible ? 'ELIGIBLE' : 'NOT ELIGIBLE'}
+                        </span>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+
     if (exportCsvBtn) {
         exportCsvBtn.addEventListener("click", () => {
             const data = getAttendanceExportData();
@@ -262,6 +322,68 @@ document.addEventListener('DOMContentLoaded', function () {
             link.click();
         });
     }
+
+    document.getElementById("exportSummaryCsv")?.addEventListener("click", () => {
+        const rows = document.querySelectorAll("#attendance-summary-table tr");
+
+        if (!rows.length) {
+            alert("No summary data to export");
+            return;
+        }
+
+        let csv = "Matric Number,Student Name,Classes Attended,Attendance %,Status\n";
+
+        rows.forEach(row => {
+            const cols = row.querySelectorAll("td");
+            if (!cols.length) return;
+
+            csv += `"${cols[0].innerText}","${cols[1].innerText}","${cols[2].innerText}","${cols[3].innerText}","${cols[4].innerText}"\n`;
+        });
+
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        const link = document.createElement("a");
+
+        link.href = URL.createObjectURL(blob);
+        link.download = "attendance_summary.csv";
+        link.click();
+    });
+
+    
+    document.getElementById("exportSummaryPdf")?.addEventListener("click", () => {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        const rows = [];
+        document.querySelectorAll("#attendance-summary-table tr").forEach(tr => {
+            const cols = tr.querySelectorAll("td");
+            if (cols.length) {
+                rows.push([
+                    cols[0].innerText,
+                    cols[1].innerText,
+                    cols[2].innerText,
+                    cols[3].innerText,
+                    cols[4].innerText
+                ]);
+            }
+        });
+
+        if (!rows.length) {
+            alert("No summary data to export");
+            return;
+        }
+
+        doc.text("Attendance Summary", 14, 15);
+
+        doc.autoTable({
+            head: [["Matric", "Student Name", "Classes Attended", "%", "Status"]],
+            body: rows,
+            startY: 20
+        });
+
+        doc.save("attendance_summary.pdf");
+    });
+
+
 
     if (exportPdfBtn) {
         exportPdfBtn.addEventListener("click", () => {

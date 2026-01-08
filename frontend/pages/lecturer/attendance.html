@@ -69,6 +69,15 @@
                             <i class="fas fa-file-pdf"></i> PDF
                         </button>
 
+                        <button id="exportSummaryCsv" class="btn btn-success btn-sm">
+                            Summary CSV
+                        </button>
+
+                        <button id="exportSummaryPdf" class="btn btn-danger btn-sm">
+                            Summary PDF
+                        </button>
+
+
                     </div>
                      
                         
@@ -93,6 +102,29 @@
                                 </tr>
                             </tbody>
                         </table>
+
+
+                        <hr class="my-4">
+
+                        <h5 class="text-primary">Attendance Summary</h5>
+
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Matric Number</th>
+                                    <th>Student Name</th>
+                                    <th>Classes Attended</th>
+                                    <th>Attendance %</th>
+                                    <th>Status (75%)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="attendance-summary-table">
+                                <tr>
+                                    <td colspan="5" class="text-center">Loading...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </div>
